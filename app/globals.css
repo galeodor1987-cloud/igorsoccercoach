@@ -1,0 +1,274 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400;500&display=swap');
+
+/* ─── Design tokens ─────────────────────────────────────── */
+:root {
+  --bg:        #0C0C0C;
+  --surface:   #141414;
+  --border:    rgba(245, 240, 232, 0.08);
+  --chalk:     #F5F0E8;
+  --chalk-m:   rgba(245, 240, 232, 0.55);
+  --chalk-d:   rgba(245, 240, 232, 0.25);
+  --chalk-g:   rgba(245, 240, 232, 0.08);
+  --gold:      #C9A84C;
+  --gold-l:    #E8C96A;
+  --gold-d:    #9A7B2E;
+  --radius-sm: 0px;
+  --radius-md: 2px;
+}
+
+/* ─── Reset ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--chalk);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── Grain texture ─────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 9999;
+  animation: grain 8s steps(10) infinite;
+}
+
+/* ─── Selection ─────────────────────────────────────────── */
+::selection { background: var(--gold); color: #0C0C0C; }
+
+/* ─── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ─── Typography scale ──────────────────────────────────── */
+.t-hero {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(3.5rem, 10vw, 9rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+.t-h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+.t-h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.t-h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+.t-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.t-stat {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+/* ─── Layout ────────────────────────────────────────────── */
+.wrap {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 3rem);
+}
+.section { padding: clamp(4rem, 10vw, 8rem) 0; }
+
+/* ─── Buttons ───────────────────────────────────────────── */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: var(--gold);
+  color: #0C0C0C;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.btn-gold:hover { background: var(--gold-l); transform: translateY(-1px); }
+
+.btn-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  border: 1px solid var(--border);
+  color: var(--chalk);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.15s ease;
+}
+.btn-line:hover { border-color: var(--chalk-d); transform: translateY(-1px); }
+
+/* ─── Nav link ──────────────────────────────────────────── */
+.nav-link {
+  position: relative;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--chalk-m);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+.nav-link:hover,
+.nav-link.active { color: var(--chalk); }
+.nav-link:hover::after,
+.nav-link.active::after { width: 100%; }
+
+/* ─── Pure-CSS hover utilities (NO JS event handlers) ───── */
+/* Use these in Server Components instead of onMouseEnter   */
+
+.h-chalk {
+  color: var(--chalk-m);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.h-chalk:hover { color: var(--chalk); }
+
+.h-gold {
+  color: var(--chalk-m);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.h-gold:hover { color: var(--gold); }
+
+.h-gold-bright {
+  color: var(--gold);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.h-gold-bright:hover { color: var(--gold-l); }
+
+.h-border {
+  border: 1px solid var(--border);
+  text-decoration: none;
+  transition: border-color 0.3s ease;
+}
+.h-border:hover { border-color: rgba(201, 168, 76, 0.35); }
+
+.h-card {
+  border: 1px solid var(--border);
+  transition: border-color 0.3s ease;
+}
+.h-card:hover { border-color: rgba(201, 168, 76, 0.3); }
+
+/* ─── Card grid separator layout ───────────────────────── */
+.grid-sep {
+  display: grid;
+  gap: 1.5px;
+  background: var(--border);
+}
+.grid-sep > * { background: var(--surface); }
+
+/* ─── Reveal animation (JS adds .visible) ──────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Hero entry animations ─────────────────────────────── */
+.anim-fade-up {
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards;
+}
+.anim-fade-in {
+  opacity: 0;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* ─── Keyframes ─────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes grain {
+  0%,100% { transform: translate(0,0); }
+  10%  { transform: translate(-2%,-3%); }
+  20%  { transform: translate(3%,2%); }
+  30%  { transform: translate(-1%,4%); }
+  40%  { transform: translate(4%,-1%); }
+  50%  { transform: translate(-3%,3%); }
+  60%  { transform: translate(2%,-4%); }
+  70%  { transform: translate(-4%,1%); }
+  80%  { transform: translate(1%,-2%); }
+  90%  { transform: translate(3%,4%); }
+}
+
+/* ─── Delay utilities ───────────────────────────────────── */
+.d1 { animation-delay: 0.1s; }
+.d2 { animation-delay: 0.2s; }
+.d3 { animation-delay: 0.35s; }
+.d4 { animation-delay: 0.5s; }
+.d5 { animation-delay: 0.7s; }
+.d6 { animation-delay: 1s; }
+
+/* ─── Misc ──────────────────────────────────────────────── */
+.gold { color: var(--gold); }
+.chalk-m { color: var(--chalk-m); }
+.chalk-d { color: var(--chalk-d); }
+.divider { height: 1px; background: var(--border); }
